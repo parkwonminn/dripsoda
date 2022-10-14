@@ -1,0 +1,71 @@
+@charset "UTF-8";
+
+body > .main {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 6.25rem 1rem;
+}
+
+body > .main > .login-form {
+    width: 20rem;
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+body > .main > .login-form > * + * {
+    margin-top: 0.625rem;
+}
+
+body > .main > .login-form > .title {
+    align-self: center;
+    font-size: 1.875rem;
+    font-weight: 600;
+    margin-bottom: 2.5rem;
+}
+
+body > .main > .login-form > .warning {
+    color: rgb(231, 76, 60);
+    display: none;
+}
+
+body > .main > .login-form > .warning.visible {
+    display: block;
+}
+
+body > .main > .login-form > .login-button {
+    margin: 1rem 0;
+}
+
+body > .main > .login-form > .menu {
+    align-items: center;
+    color: rgb(var(--body-color-inactive));
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+body > .main > .login-form > .menu > .item + .item {
+    margin-left: 0.75rem;
+}
+
+body > .main > .login-form > .menu > .spring {
+    flex: 1;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>드립소다 이메일 찾기</title>
+    <th:block th:insert="~{fragments/head.html :: content}"></th:block>
+    <link rel="stylesheet" th:href="@{/member/resources/stylesheets/userRecoverEmail.css}">
+    <script defer th:src="@{/member/resources/scripts/userRecoverEmail.js}"></script>
+</head>
+<body class="_layout-hmf">
+<th:block th:replace="~{fragments/header.html :: content}"></th:block>
+<main class="_main main">
+    <div class="email-container" id="emailContainer">
+        <h2 class="title">이메일 찾기</h2>
+        <span class="message">요청하신 이메일은 <b class="email" id="email">sample@sample.sample</b> 입니다.</span>
+        <a class="link _object-button" th:href="@{/member/userLogin}">로그인</a>
+    </div>
+    <form class="recover-email-form visible" id="recoverEmailForm">
+        <h2 class="title">이메일 찾기</h2>
+        <label class="_object-label">
+            <span hidden>이름</span>
+            <input autofocus class="_object-input" maxlength="5" name="name" placeholder="이름" type="text">
+        </label>
+        <label class="_object-label">
+            <span hidden>연락처 국가 코드</span>
+            <select class="_object-input" name="contactCountryValue">
+                <!--/*@thymesVar id="memberContactCountries" type="com.dripsoda.community.entities.member.ContactCountryEntity[]"*/-->
+                <option th:each="memberContactCountry : ${memberContactCountries}"
+                        th:value="${memberContactCountry.getValue()}"
+                        th:selected="${memberContactCountry.getValue().equals('082')}"
+                        th:text="${'+' + memberContactCountry.getValue() + ' ' + memberContactCountry.getText()}"></option>
+            </select>
+        </label>
+        <label class="_object-label contact">
+            <span hidden>연락처</span>
+            <input class="_object-input input" maxlength="12" name="contact" placeholder="연락처 ( - 없이 입력해주세요.)" type="text">
+            <input name="contactAuthSalt" type="hidden">
+            <input class="_object-button" name="contactAuthRequestButton" type="button" value="인증번호 요청" data-func="requestContactAuthCode">
+        </label>
+        <label class="_object-label contact">
+            <span hidden>연락처 인증번호</span>
+            <input class="_object-input input" disabled maxlength="6" name="contactAuthCode" placeholder="인증번호" type="text">
+            <input class="_object-button" disabled name="contactAuthCheckButton" type="button" value="인증번호 확인" data-func="checkContactAuthCode">
+        </label>
+        <span class="warning" id="recoverEmailWarning"></span>
+        <input class="_object-button" name="emailRecoverButton" type="submit" value="이메일 찾기">
+    </form>
+</main>
+<th:block th:replace="~{fragments/footer.html :: content}"></th:block>
+</body>
+</html>

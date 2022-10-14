@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>드립소다 회원가입</title>
+    <th:block th:insert="~{fragments/head.html :: content}"></th:block>
+    <link rel="stylesheet" th:href="@{/member/resources/stylesheets/userRegister.css}">
+    <script defer th:src="@{/member/resources/scripts/userRegister.js}"></script>
+</head>
+<body class="_layout-hmf">
+<th:block th:replace="~{fragments/header.html :: content}"></th:block>
+<main class="_main main">
+    <form class="register-form" id="registerForm">
+        <h2 class="title">회원가입</h2>
+        <label class="_object-label">
+            <span hidden>이메일 주소</span>
+            <input autofocus class="_object-input" maxlength="50" name="email" placeholder="이메일 주소" type="email">
+        </label>
+        <label class="_object-label">
+            <span hidden>비밀번호</span>
+            <input class="_object-input" maxlength="50" name="password" placeholder="비밀번호(8자~50자, 영문, 숫자 및 특수문자 사용 가능)" type="password">
+        </label>
+        <label class="_object-label">
+            <span hidden>비밀번호 재입력</span>
+            <input class="_object-input" maxlength="50" name="passwordCheck" placeholder="비밀번호 재입력" type="password">
+        </label>
+        <label class="_object-label">
+            <span hidden>이름</span>
+            <input class="_object-input" maxlength="5" name="name" placeholder="이름" type="text">
+        </label>
+        <label class="_object-label">
+            <span hidden>연락처 국가 코드</span>
+            <select class="_object-input" name="contactCountryValue">
+                <!--/*@thymesVar id="memberContactCountries" type="com.dripsoda.community.entities.member.ContactCountryEntity[]"*/-->
+                <option th:each="memberContactCountry : ${memberContactCountries}"
+                        th:value="${memberContactCountry.getValue()}"
+                        th:selected="${memberContactCountry.getValue().equals('082')}"
+                        th:text="${'+' + memberContactCountry.getValue() + ' ' + memberContactCountry.getText()}"></option>
+            </select>
+        </label>
+        <label class="_object-label contact">
+            <span hidden>연락처</span>
+            <input class="_object-input input" maxlength="12" name="contact" placeholder="연락처 ( - 없이 입력해주세요.)" type="text">
+            <input name="contactAuthSalt" type="hidden">
+            <input class="_object-button" name="contactAuthRequestButton" type="button" value="인증번호 요청" data-func="requestContactAuthCode">
+        </label>
+        <label class="_object-label contact">
+            <span hidden>연락처 인증번호</span>
+            <input class="_object-input input" disabled maxlength="6" name="contactAuthCode" placeholder="인증번호" type="text">
+            <input class="_object-button" disabled name="contactAuthCheckButton" type="button" value="인증번호 확인" data-func="checkContactAuthCode">
+        </label>
+        <span class="warning" id="registerWarning"></span>
+        <div class="policy-container">
+            <label class="_object-check-container policy">
+                <input hidden name="policyTerms" type="checkbox">
+                <span class="_object-check">
+                    <i class="_object-check-icon fa-solid fa-check"></i>
+                </span>
+                <span class="text">(필수) 서비스 이용약관 동의</span>
+                <a class="link" target="_blank" th:href="@{/misc/policy (tab='terms')}">약관보기</a>
+            </label>
+            <label class="_object-check-container policy">
+                <input hidden name="policyPrivacy" type="checkbox">
+                <span class="_object-check">
+                    <i class="_object-check-icon fa-solid fa-check"></i>
+                </span>
+                <span class="text">(필수) 개인정보처리방침 동의</span>
+                <a class="link" target="_blank" th:href="@{/misc/policy (tab='privacy')}">약관보기</a>
+            </label>
+            <label class="_object-check-container policy">
+                <input hidden name="policyMarketing" type="checkbox">
+                <span class="_object-check">
+                    <i class="_object-check-icon fa-solid fa-check"></i>
+                </span>
+                <span class="text">(선택) 마케팅 정보 활용 동의</span>
+                <a class="link" target="_blank" th:href="@{/misc/policy (tab='marketing')}">약관보기</a>
+            </label>
+        </div>
+        <input class="_object-button" name="registerButton" type="submit" value="회원가입">
+    </form>
+</main>
+<th:block th:replace="~{fragments/footer.html :: content}"></th:block>
+</body>
+</html>

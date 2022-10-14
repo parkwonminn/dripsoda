@@ -1,0 +1,147 @@
+@charset "UTF-8";
+
+body {
+    background-color: rgb(var(--body-background-color-dim));
+}
+
+body > .main {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: 4rem 0;
+}
+
+body > .main > .box {
+    background-color: rgb(255, 255, 255);
+    border: 0.0625rem solid rgb(230, 230, 230);
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+}
+
+body > .main > .nav {
+    width: 17.5rem;
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin-right: 2.75rem;
+}
+
+body > .main > .nav > * + * {
+    margin-top: 0.75rem;
+}
+
+body > .main > .nav > .profile-container {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-bottom: 0.75rem;
+}
+
+body > .main > .nav > .profile-container > .profile-image {
+    width: 3.25rem;
+    height: 3.25rem;
+    background-color: rgb(230, 230, 230);
+    border-radius: 50%;
+    margin-right: 1.25rem;
+    overflow: hidden;
+}
+
+body > .main > .nav > .profile-container > .name {
+    cursor: default;
+    font-size: 1.25rem;
+    font-weight: 500;
+}
+
+body > .main > .nav > .item {
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+body > .main > .nav > .item > .link {
+    background-color: rgb(var(--body-background-color-dim));
+    border: 0.0625rem solid rgb(230, 230, 230);
+    border-radius: 0.5rem;
+    font-weight: 400;
+    padding: 1rem 1.125rem;
+}
+
+body > .main > .nav > .item[selected] > .link {
+    background-color: rgba(var(--concept-color-green), 12.5%);
+    border: 0.0625rem solid rgba(var(--concept-color-green), 15%);
+}
+
+body > .main > .nav > .item[selected] > .link > .text {
+    color: rgb(var(--concept-color-green));
+    filter: brightness(90%);
+}
+
+body > .main > .content {
+    flex: 1;
+    padding-right: 2rem;
+    padding-left: 2rem;
+}
+
+body > .main > .content > .title {
+    border-bottom: 0.0625rem solid rgb(230, 230, 230);
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+}
+
+body > .main > .content.info > .form > .table > .body > .row[rel="row-change-password"],
+body > .main > .content.info > .form > .table > .body > .row[rel="row-change-contact"] {
+    display: none;
+}
+
+body > .main > .content.info > .form > .table > .body > .row.visible[rel="row-change-password"],
+body > .main > .content.info > .form > .table > .body > .row.visible[rel="row-change-contact"] {
+    display: table-row;
+}
+
+body > .main > .content.info > .form > .table > .body > .row:not(:last-child) > * {
+    padding-bottom: 0.375rem;
+}
+
+body > .main > .content.info > .form > .table > .body > .row > .caption {
+    font: inherit;
+    padding-right: 0.75rem;
+    text-align: right;
+    white-space: nowrap;
+}
+
+body > .main > .content.info > .form > .table > .body > .row > .cell > * + * {
+    margin-top: 0.5rem;
+}
+
+body > .main > .content.info > .form > .table > .body > .row > .cell > .label {
+    align-items: center;
+    display: flex;
+    flex: 0;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+body > .main > .content.info > .form > .table > .body > .row > .cell > .label > * {
+    margin-right: 0.625rem;
+}
+
+body > .main > .content.info > .form > .table > .body > .row > .cell > .label > .input {
+    flex: 0 0 15rem;
+}
+
+body > .main > .content.info > .form > .table > .body > .row > .cell > .warning {
+    color: rgb(231,76,60);
+
+}
+
+
+
+
+
+

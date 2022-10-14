@@ -1,0 +1,41 @@
+<!--suppress HtmlRequiredTitleElement, HtmlUnknownTag, RequiredAttributes -->
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<footer class="_footer _content-wrapper" th:fragment="content">
+    <div class="_content-container content-container">
+        <img alt="드립소다" class="logo" th:src="@{/resources/images/_logo.svg}">
+        <ul class="enumerator">
+            <li class="item important">
+                <span class="value">
+                    <span>고객센터</span>
+                    <a href="tel:070-0000-0000">070-0000-0000</a>
+                </span>
+            </li>
+            <li class="item">
+                <span class="key">실시간 채팅상담</span>
+                <span class="value">불가능</span>
+            </li>
+            <li class="item">
+                <span class="key">친절 유선 상담</span>
+                <span class="value">불가능</span>
+            </li>
+        </ul>
+        <ul class="enumerator line-separated">
+            <li class="item">
+                <a class="key" th:href="@{/misc/policy (tab='privacy')}">개인정보 처리방침</a>
+            </li>
+            <li class="item">
+                <a class="value" th:href="@{/misc/policy (tab='terms')}">이용약관</a>
+            </li>
+            <li class="item">
+                <a class="value" th:href="@{/misc/policy (tab='refund')}">취소 및 환불정책</a>
+            </li>
+            <li class="item">
+                <a class="value" th:href="@{/misc/policy (tab='partner')}">파트너 입점</a>
+            </li>
+        </ul>
+        <span class="warning">해당 사이트는 개발자 포트폴리오 공부용으로 만들어진 웹 사이트이며 실제 기능이 작동하지 않습니다. 또한 트립소다(Tripsoda.com) 사이트를 오마주했음을 밝힘과 동시에 그 어떤 저작물의 권리를 주장하지 않습니다.</span>
+        <span class="copy">Copyleft 2022 YHPark. No Rights Reserved.</span>
+    </div>
+</footer>
+</html>

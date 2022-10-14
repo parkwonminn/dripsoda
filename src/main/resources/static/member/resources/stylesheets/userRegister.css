@@ -1,0 +1,64 @@
+@charset "UTF-8";
+
+body > .main {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 4rem 1rem;
+}
+
+body > .main > .register-form {
+    width: 25rem;
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+body > .main > .register-form > * + * {
+    margin-top: 0.625rem;
+}
+
+body > .main > .register-form > .title {
+    align-self: center;
+    font-size: 1.875rem;
+    font-weight: 600;
+    margin-bottom: 2.5rem;
+}
+
+body > .main > .register-form > .contact {
+    align-items: stretch;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+body > .main > .register-form > .contact > .input {
+    margin-right: 0.5rem;
+}
+
+body > .main > .register-form > .warning {
+    color: rgb(231, 76, 60);
+    display: none;
+}
+
+body > .main > .register-form > .warning.visible {
+    display: block;
+}
+
+body > .main > .register-form > .policy-container {
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin: 2rem 0;
+}
+
+body > .main > .register-form > .policy-container > .policy + .policy {
+    margin-top: 0.75rem;
+}
+
+body > .main > .register-form > .policy-container > .policy > .text {
+    flex: 1;
+}

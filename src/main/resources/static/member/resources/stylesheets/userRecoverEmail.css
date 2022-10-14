@@ -1,0 +1,78 @@
+@charset "UTF-8";
+
+body > .main {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 4rem 1rem;
+}
+
+body > .main > .email-container {
+    width: 50rem;
+    align-items: center;
+    display: none;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+body > .main > .recover-email-form {
+    width: 25rem;
+    align-items: stretch;
+    display: none;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+body > .main > .email-container.visible,
+body > .main > .recover-email-form.visible {
+    display: flex;
+}
+
+body > .main > .recover-email-form > * + * {
+    margin-top: 0.625rem;
+}
+
+body > .main > .email-container > .title,
+body > .main > .recover-email-form > .title {
+    align-self: center;
+    font-size: 1.875rem;
+    font-weight: 600;
+    margin-bottom: 2.5rem;
+}
+
+body > .main > .email-container > .message {
+    font-size: 1.5rem;
+    margin-bottom: 2.5rem;
+}
+
+body > .main > .email-container > .message > .email {
+    color: rgb(var(--concept-color-green));
+    font-weight: 500;
+}
+
+body > .main > .email-container > .link {
+    color: rgb(255, 255, 255);
+    padding-right: 4rem;
+    padding-left: 4rem;
+}
+
+body > .main > .recover-email-form > .contact {
+    align-items: stretch;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+body > .main > .recover-email-form > .contact > .input {
+    margin-right: 0.5rem;
+}
+
+body > .main > .recover-email-form > .warning {
+    color: rgb(231, 76, 60);
+    display: none;
+}
+
+body > .main > .recover-email-form > .warning.visible {
+    display: block;
+}

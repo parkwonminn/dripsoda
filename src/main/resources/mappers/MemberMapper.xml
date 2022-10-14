@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dripsoda.community.mappers.IMemberMapper">
+    <insert id="insertContactAuth"
+            useGeneratedKeys="true"
+            keyColumn="index"
+            keyProperty="index"
+            parameterType="com.dripsoda.community.entities.member.ContactAuthEntity">
+        INSERT INTO `dripsoda_member`.`contact_auths` (`contact`, `code`, `salt`, `created_at`, `expires_at`, `expired_flag`)
+        VALUES (#{contact}, #{code}, #{salt}, #{createdAt}, #{expiresAt}, #{isExpired})
+    </insert>
+
+    <insert id="insertEmailAuth"
+            useGeneratedKeys="true"
+            keyColumn="index"
+            keyProperty="index"
+            parameterType="com.dripsoda.community.entities.member.EmailAuthEntity">
+        INSERT INTO `dripsoda_member`.`email_auths` (`email`, `code`, `created_at`, `expires_at`, `expired_flag`)
+        VALUES (#{email}, #{code}, #{createdAt}, #{expiresAt}, #{isExpired})
+    </insert>
+
+    <insert id="insertUser"
+            parameterType="com.dripsoda.community.entities.member.UserEntity">
+        INSERT INTO `dripsoda_member`.`users` (`email`, `password`, `name`, `contact_country_value`, `contact`, `policy_terms_at`, `policy_privacy_at`, `policy_marketing_at`, `status_value`, `registered_at`, `admin_flag`)
+        VALUES (#{email}, #{password}, #{name}, #{contactCountryValue}, #{contact}, #{policyTermsAt}, #{policyPrivacyAt}, #{policyMarketingAt}, #{statusValue}, #{registeredAt}, #{isAdmin})
+    </insert>
+
+    <select id="selectContactAuthByContactCodeSalt"
+            parameterType="com.dripsoda.community.entities.member.ContactAuthEntity"
+            resultType="com.dripsoda.community.entities.member.ContactAuthEntity">
+        SELECT `index`        AS `index`,
+               `contact`      AS `contact`,
+               `code`         AS `code`,
+               `salt`         AS `salt`,
+               `created_at`   AS `createdAt`,
+               `expires_at`   AS `expiresAt`,
+               `expired_flag` AS `isExpired`
+        FROM `dripsoda_member`.`contact_auths`
+        WHERE `contact` = #{contact}
+          AND `code` = #{code}
+          AND `salt` = #{salt}
+        LIMIT 1
+    </select>
+
+    <select id="selectContactCountries"
+            resultType="com.dripsoda.community.entities.member.ContactCountryEntity">
+        SELECT `value` AS `value`,
+               `text`  AS `text`
+        FROM `dripsoda_member`.`contact_countries`
+        ORDER BY `value`
+    </select>
+
+    <select id="selectEmailAuthByIndex"
+            parameterType="com.dripsoda.community.entities.member.EmailAuthEntity"
+            resultType="com.dripsoda.community.entities.member.EmailAuthEntity">
+        SELECT `index`        AS `index`,
+               `email`        AS `email`,
+               `code`         AS `code`,
+               `created_at`   AS `createdAt`,
+               `expires_at`   AS `expiresAt`,
+               `expired_flag` AS `isExpired`
+        FROM `dripsoda_member`.`email_auths`
+        WHERE `index` = #{index}
+        LIMIT 1
+    </select>
+
+    <select id="selectUserByEmail"
+            parameterType="com.dripsoda.community.entities.member.UserEntity"
+            resultType="com.dripsoda.community.entities.member.UserEntity">
+        SELECT `email`                 AS `email`,
+               `password`              AS `password`,
+               `name`                  AS `name`,
+               `contact_country_value` AS `contactCountryValue`,
+               `contact`               AS `contact`,
+               `policy_terms_at`       AS `policyTermsAt`,
+               `policy_privacy_at`     AS `policyPrivacyAt`,
+               `policy_marketing_at`   AS `policyMarketingAt`,
+               `status_value`          AS `statusValue`,
+               `registered_at`         AS `registeredAt`,
+               `admin_flag`            AS `isAdmin`
+        FROM `dripsoda_member`.`users`
+        WHERE `email` = #{email}
+        LIMIT 1
+    </select>
+
+    <select id="selectUserByNameContact"
+            parameterType="com.dripsoda.community.entities.member.UserEntity"
+            resultType="com.dripsoda.community.entities.member.UserEntity">
+        SELECT `email`                 AS `email`,
+               `password`              AS `password`,
+               `name`                  AS `name`,
+               `contact_country_value` AS `contactCountryValue`,
+               `contact`               AS `contact`,
+               `policy_terms_at`       AS `policyTermsAt`,
+               `policy_privacy_at`     AS `policyPrivacyAt`,
+               `policy_marketing_at`   AS `policyMarketingAt`,
+               `status_value`          AS `statusValue`,
+               `registered_at`         AS `registeredAt`,
+               `admin_flag`            AS `isAdmin`
+        FROM `dripsoda_member`.`users`
+        WHERE `name` = #{name}
+          AND `contact` = #{contact}
+        LIMIT 1
+    </select>
+
+    <select id="selectUserByContact"
+            parameterType="com.dripsoda.community.entities.member.UserEntity"
+            resultType="com.dripsoda.community.entities.member.UserEntity">
+        SELECT `email`                 AS `email`,
+               `password`              AS `password`,
+               `name`                  AS `name`,
+               `contact_country_value` AS `contactCountryValue`,
+               `contact`               AS `contact`,
+               `policy_terms_at`       AS `policyTermsAt`,
+               `policy_privacy_at`     AS `policyPrivacyAt`,
+               `policy_marketing_at`   AS `policyMarketingAt`,
+               `status_value`          AS `statusValue`,
+               `registered_at`         AS `registeredAt`,
+               `admin_flag`            AS `isAdmin`
+        FROM `dripsoda_member`.`users`
+        WHERE `contact` = #{contact}
+        LIMIT 1
+    </select>
+
+    <select id="selectUserByEmailPassword"
+            parameterType="com.dripsoda.community.entities.member.UserEntity"
+            resultType="com.dripsoda.community.entities.member.UserEntity">
+        SELECT `email`                 AS `email`,
+               `password`              AS `password`,
+               `name`                  AS `name`,
+               `contact_country_value` AS `contactCountryValue`,
+               `contact`               AS `contact`,
+               `policy_terms_at`       AS `policyTermsAt`,
+               `policy_privacy_at`     AS `policyPrivacyAt`,
+               `policy_marketing_at`   AS `policyMarketingAt`,
+               `status_value`          AS `statusValue`,
+               `registered_at`         AS `registeredAt`,
+               `admin_flag`            AS `isAdmin`
+        FROM `dripsoda_member`.`users`
+        WHERE `email` = #{email}
+            and `password` = #{password}
+        LIMIT 1
+    </select>
+
+
+    <update id="updateContactAuth"
+            parameterType="com.dripsoda.community.entities.member.ContactAuthEntity">
+        UPDATE `dripsoda_member`.`contact_auths`
+        SET `contact`      = #{contact},
+            `code`         = #{code},
+            `salt`         = #{salt},
+            `created_at`   = #{createdAt},
+            `expires_at`   = #{expiresAt},
+            `expired_flag` = #{isExpired}
+        WHERE `index` = #{index}
+        LIMIT 1
+    </update>
+
+    <update id="updateEmailAuth"
+            parameterType="com.dripsoda.community.entities.member.EmailAuthEntity">
+        UPDATE `dripsoda_member`.`email_auths`
+        SET `email`        = #{email},
+            `code`         = #{code},
+            `created_at`   = #{createdAt},
+            `expires_at`   = #{expiresAt},
+            `expired_flag` = #{isExpired}
+        WHERE `index` = #{index}
+        LIMIT 1
+    </update>
+
+    <update id="updateUser"
+            parameterType="com.dripsoda.community.entities.member.UserEntity">
+        UPDATE `dripsoda_member`.`users`
+        SET `password`              = #{password},
+            `name`                  = #{name},
+            `contact_country_value` = #{contactCountryValue},
+            `contact`               = #{contact},
+            `policy_terms_at`       = #{policyTermsAt},
+            `policy_privacy_at`     = #{policyPrivacyAt},
+            `policy_marketing_at`   = #{policyMarketingAt},
+            `status_value`          = #{statusValue},
+            `registered_at`         = #{registeredAt},
+            `admin_flag`            = #{isAdmin}
+        WHERE `email` = #{email}
+        LIMIT 1
+    </update>
+</mapper>

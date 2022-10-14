@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>드립소다 로그인</title>
+    <th:block th:insert="~{fragments/head.html :: content}"></th:block>
+    <link rel="stylesheet" th:href="@{/member/resources/stylesheets/userLogin.css}">
+    <script defer th:src="@{/member/resources/scripts/userLogin.js}"></script>
+    <script defer th:src="@{/member/resources/scripts/userMy.js}"></script>
+</head>
+<body class="_layout-hmf">
+<th:block th:replace="~{fragments/header.html :: content}"></th:block>
+<main class="_main main">
+    <form class="login-form" id="form">
+        <h2 class="title">로그인</h2>
+        <label class="_object-label">
+            <span hidden>이메일</span>
+            <input autofocus class="_object-input" maxlength="50" name="email" placeholder="이메일" type="email">
+        </label>
+        <label class="_object-label">
+            <span hidden>비밀번호</span>
+            <input class="_object-input" maxlength="50" name="password" placeholder="비밀번호" type="password">
+        </label>
+        <span class="warning" id="warning"></span>
+        <label class="_object-check-container">
+            <input hidden name="autosign" type="checkbox">
+            <span class="_object-check">
+                <i class="_object-check-icon fa-solid fa-check"></i>
+            </span>
+            <span>로그인 상태 유지</span>
+        </label>
+        <input class="_object-button login-button" type="submit" value="로그인">
+        <ul class="menu">
+            <li class="item">
+                <a class="link" th:href="@{/member/userRecoverEmail}">이메일 찾기</a>
+            </li>
+            <li class="item">
+                <a class="link" th:href="@{/member/userRecoverPassword}">비밀번호 찾기</a>
+            </li>
+            <li class="spring"></li>
+            <li class="item">
+                <a class="link" th:href="@{/member/userRegister}">회원가입</a>
+            </li>
+        </ul>
+    </form>
+</main>
+<th:block th:replace="~{fragments/footer.html :: content}"></th:block>
+</body>
+</html>

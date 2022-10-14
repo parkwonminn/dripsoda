@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>드립소다 마이페이지</title>
+    <th:block th:insert="~{fragments/head.html :: content}"></th:block>
+    <link rel="stylesheet" th:href="@{/member/resources/stylesheets/userMy.css}">
+    <script defer th:src="@{/member/resources/scripts/userMy.js}"></script>
+</head>
+<body class="_layout-hmf">
+<th:block th:replace="~{fragments/header.html :: content}"></th:block>
+<main class="_main main">
+    <ul class="nav box" th:with="tab = ${#request.getParameter('tab')}">
+        <li class="profile-container">
+            <div class="profile-image"></div>
+            <div class="name" th:text="${session.memberUser.getName()}"></div>
+        </li>
+        <li class="item" th:selected="${tab == null || tab.equals('info') || (!tab.equals('trip') && !tab.equals('book') && !tab.equals('comment') && !tab.equals('accompany') && !tab.equals('truncate'))}">
+            <a class="link" th:href="@{./userMy (tab=info)}">
+                <span class="text">회원정보 관리</span>
+            </a>
+        </li>
+        <li class="item" th:selected="${tab != null && tab.equals('trip')}">
+            <a class="link" th:href="@{./userMy (tab=trip)}">
+                <span class="text">여행후기</span>
+            </a>
+        </li>
+        <li class="item" th:selected="${tab != null && tab.equals('book')}">
+            <a class="link" th:href="@{./userMy (tab=book)}">
+                <span class="text">예약내역</span>
+            </a>
+        </li>
+        <li class="item" th:selected="${tab != null && tab.equals('comment')}">
+            <a class="link" th:href="@{./userMy (tab=comment)}">
+                <span class="text">내 댓글</span>
+            </a>
+        </li>
+        <li class="item" th:selected="${tab != null && tab.equals('accompany')}">
+            <a class="link" th:href="@{./userMy (tab=accompany)}">
+                <span class="text">내 동행 게시글</span>
+            </a>
+        </li>
+        <li class="item" th:selected="${tab != null && tab.equals('truncate')}">
+            <a class="link" th:href="@{./userMy (tab=truncate)}">
+                <span class="text">회원탈퇴</span>
+            </a>
+        </li>
+    </ul>
+    <th:block th:switch="${#request.getParameter('tab')}">
+        <section class="content box trip" th:case="'trip'">
+            <h2 class="title">여행후기</h2>
+        </section>
+        <section class="content box book" th:case="'book'">
+            <h2 class="title">예약내역</h2>
+        </section>
+        <section class="content box comment" th:case="'comment'">
+            <h2 class="title">내 댓글</h2>
+        </section>
+        <section class="content box accompany" th:case="'accompany'">
+            <h2 class="title">내 동행 게시글</h2>
+        </section>
+        <section class="content box truncate" th:case="'truncate'">
+            <h2 class="title">회원탈퇴</h2>
+        </section>
+        <section class="content box info" th:case="*">
+            <h2 class="title">회원정보 관리</h2>
+            <form class="form" id="infoForm">
+                <table class="table">
+                    <tbody class="body">
+                    <tr class="row">
+                        <th class="caption">이메일</th>
+                        <td class="cell">
+                            <label class="_object-label label">
+                                <span hidden>이메일</span>
+                                <input class="_object-input input" disabled th:value="${session.memberUser.getEmail()}">
+                            </label>
+                        </td>
+                    </tr>
+                    <tr class="row">
+                        <th class="caption">현재 비밀번호</th>
+                        <td class="cell">
+                            <label class="_object-label label">
+                                <span hidden>현재 비밀번호</span>
+                                <input autofocus class="_object-input input" maxlength="50" name="oldPassword" type="password">
+                                <span class="message">회원정보를 변경하기 위해 현재 비밀번호를 입력해 주세요.</span>
+                            </label>
+                            <label class="_object-check-container">
+                                <input hidden name="changePassword" type="checkbox">
+                                <span class="_object-check">
+                                    <i class="_object-check-icon fa-solid fa-check"></i>
+                                </span>
+                                <span>비밀번호 변경하기</span>
+                            </label>
+                        </td>
+                    </tr>
+                    <tr class="row" rel="row-change-password">
+                        <th class="caption">새로운 비밀번호</th>
+                        <td class="cell">
+                            <label class="_object-label label">
+                                <span hidden>새로운 비밀번호</span>
+                                <input autofocus class="_object-input input" maxlength="50" name="newPassword" type="password">
+                                <span class="message">비밀번호를 변경하려면 새로운 비밀번호를 입력해 주세요.</span>
+                            </label>
+                            <label class="_object-label label">
+                                <span hidden>새로운 비밀번호 재입력</span>
+                                <input autofocus class="_object-input input" maxlength="50" name="newPasswordCheck" type="password">
+                                <span class="message">한 번 더 입력해 주세요.</span>
+                            </label>
+                        </td>
+                    </tr>
+                    <tr class="row">
+                        <th class="caption">연락처</th>
+                        <td class="cell">
+                            <label class="_object-label label">
+                                <span hidden>국가 코드</span>
+                                <select class="_object-input input" disabled>
+                                    <!--/*@thymesVar id="memberContactCountries" type="com.dripsoda.community.entities.member.ContactCountryEntity[]"*/-->
+                                    <option th:each="country : ${memberContactCountries}"
+                                            th:value="${country.getValue()}"
+                                            th:text="${'+' + country.getValue() + ' ' + country.getText()}"
+                                            th:selected="${country.getValue().equals(session.memberUser.getContactCountryValue())}"
+                                            th:if="${country.getValue().equals(session.memberUser.getContactCountryValue())}"></option>
+                                    <!--/*@thymesVar id="memberContactCountry" type="com.dripsoda.community.entities.member.ContactCountryEntity"*/-->
+                                    <!-- <option disabled th:text="${'+' + session.memberUser.getContactCountryValue() + ' ' + memberContactCountry.getText()}"></option>-->
+                                </select>
+                            </label>
+                            <label class="_object-label label">
+                                <span hidden>연락처</span>
+                                <input class="_object-input input" maxlength="12" disabled type="text" th:value="${session.memberUser.getContact()}">
+                            </label>
+                            <label class="_object-check-container">
+                                <input hidden name="changeContact" type="checkbox">
+                                <span class="_object-check">
+                                    <i class="_object-check-icon fa-solid fa-checck"></i>
+                                </span>
+                                <span>연락처 변경하기</span>
+                            </label>
+                        </td>
+                    </tr>
+                    <tr class="row" rel="row-change-contact">
+                        <th class="caption">새로운 연락처</th>
+                        <td class="cell">
+                            <input name="newContactAuthSalt" type="hidden">
+                            <label class="_object-label label">
+                                <span hidden>국가 코드</span>
+                                <select class="_object-input input" name="newContactCountryValue">
+                                    <!--/*@thymesVar id="memberContactCountries" type="com.dripsoda.community.entities.member.ContactCountryEntity[]"*/-->
+                                    <option th:each="country : ${memberContactCountries}"
+                                            th:value="${country.getValue()}"
+                                            th:text="${'+' + country.getValue() + ' ' + country.getText()}"
+                                            th:selected="${country.getValue().equals('082')}"></option>
+                                </select>
+                            </label>
+                            <label class="_object-label label">
+                                <span hidden>연락처</span>
+                                <input class="_object-input input" maxlength="12" name="newContact" type="text">
+                                <input class="_object-button button" name="newContactAuthRequestButton" type="button" value="인증번호 요청">
+                            </label>
+                            <label class="_object-label label">
+                                <span hidden>인증번호</span>
+                                <input class="_object-input input" disabled maxlength="6" name="newContactAuthCode" type="text">
+                                <input class="_object-button button" disabled name="newContactAuthCheckButton" type="button" value="인증번호 확인">
+                            </label>
+                        </td>
+                    </tr>
+                    <tr class="row">
+                        <th class="caption"></th>
+                        <td class="cell">
+                            <span class="warning" id="warning"></span>
+                        </td>
+                    </tr>
+                    <tr class="row">
+                        <td class="cell" colspan="2">
+                            <input class="_object-button" type="submit" value="회원정보 수정">
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </form>
+        </section>
+    </th:block>
+</main>
+<th:block th:replace="~{fragments/footer.html :: content}"></th:block>
+</body>
+</html>
