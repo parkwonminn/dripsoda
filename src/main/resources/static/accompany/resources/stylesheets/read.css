@@ -128,6 +128,29 @@ body > .main > .content-container > .aside > .modify {
     display: none;
 }
 
+body > .main > .content-container > .aside > .request {
+    background-color: rgb(231, 76, 60);
+    display: none;
+}
+
+body > .main > .content-container > .aside > .request.visible {
+    display: inline-block;
+}
+
+body > .main > .content-container > .aside > .retract {
+    background-color: rgb(231, 76, 60);
+    display: none;
+}
+
+
+body > .main > .content-container > .aside > .retract:hover {
+    background-color: rgb(203, 67, 53);
+}
+
+body > .main > .content-container > .aside > .retract.visible {
+    display: inline-block;
+}
+
 body > .main > .content-container > .aside > .modify.visible {
     display: inline-block;
 }

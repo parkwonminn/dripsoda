@@ -35,10 +35,10 @@
                 <span class="thumbnail"></span>
                 <span class="name" id="name">닉네임 자리</span>
             </div>
-            <button class="_object-button request" id="requestButton">동행 신청하기</button>
+            <button class="_object-button request" id="requestButton" th:data="${session.memberUser != null}">동행 신청하기</button>
+            <button class="_object-button retract" id="retractButton">동행 신청 취소하기</button>
             <button class="_object-button modify" id="modifyButton">수정하기</button>
             <button class="_object-button delete" id="deleteButton">삭제하기</button>
-
         </aside>
     </div>
 </main>

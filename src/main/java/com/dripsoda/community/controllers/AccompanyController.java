@@ -247,6 +247,53 @@ public class AccompanyController {
                 .setCoverImageMime(null);
         return new ObjectMapper().writeValueAsString(article);
     }
+
+    @RequestMapping(value = "modify/{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public String postModify(@SessionAttribute(value = UserEntity.ATTRIBUTE_NAME) UserEntity user,
+                             @PathVariable(value = "id") int id,
+                             @RequestParam(value = "coverImageFile", required = false) MultipartFile coverImageFile,
+                             @RequestParam(value = "dateFromStr") String dateFromStr,
+                             @RequestParam(value = "dateToStr") String dateToStr,
+                             ArticleEntity article) throws
+            IOException,
+            ParseException {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        article.setIndex(id)
+                .setUserEmail(user.getEmail())
+                .setCoverImage(coverImageFile == null ? null : coverImageFile.getBytes())
+                .setCoverImageMime(coverImageFile == null ? null : coverImageFile.getContentType())
+                .setDateFrom(dateFormat.parse(dateFromStr))
+                .setDateTo(dateFormat.parse(dateToStr));
+        IResult result = this.accompanyService.modifyArticle(article);
+        JSONObject responseJson = new JSONObject();
+        responseJson.put(IResult.ATTRIBUTE_NAME, result.name().toLowerCase());
+        return responseJson.toString();
+    }
+
+    @RequestMapping(value = "request/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public String getRequest(@SessionAttribute(value = UserEntity.ATTRIBUTE_NAME, required = false) UserEntity user,
+                             @PathVariable(value = "id") int id) {
+        JSONObject responseJson = new JSONObject();
+        if (user == null) {
+            responseJson.put(IResult.ATTRIBUTE_NAME, false);
+        } else {
+            responseJson.put(IResult.ATTRIBUTE_NAME, this.accompanyService.checkRequest(user, id));
+        }
+        return responseJson.toString();
+    }
+
+    @RequestMapping(value = "request/{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public String postRequest(@SessionAttribute(value = UserEntity.ATTRIBUTE_NAME) UserEntity user,
+                              @PathVariable(value = "id") int id) {
+        JSONObject responseJson = new JSONObject();
+        IResult result = this.accompanyService.putRequest(user, id);
+        responseJson.put(IResult.ATTRIBUTE_NAME, result.name().toLowerCase());
+        return responseJson.toString();
+    }
+
 }
 
 

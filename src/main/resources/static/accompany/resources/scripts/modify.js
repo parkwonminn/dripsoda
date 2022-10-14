@@ -210,7 +210,7 @@ form.onsubmit = e => {
         form['title'].focus();
         return false;
     }
-    if (form['content'].value === '') {
+    if (editor.getData() === '') {
         warning.show('내용을 입력해 주세요.');
         form['content'].focus();
         return false;
@@ -226,7 +226,7 @@ form.onsubmit = e => {
     formData.append('dateFromStr', form['dateFrom'].value);
     formData.append('dateToStr', form['dateTo'].value);
     formData.append('title', form['title'].value);
-    formData.append('content', form['content'].value);
+    formData.append('content', editor.getData());
     if ((form['coverImage']?.files?.length ?? 0) > 0) {
         formData.append('coverImageFile', form['coverImage'].files[0]);
     }
@@ -253,7 +253,7 @@ form.onsubmit = e => {
     xhr.send(formData);
 };
 
-
+let editor;
 const loadArticle = () => {
     //const id = window.location.href.split('/').at(-1).split('?')[0];
     const xhr = new XMLHttpRequest();
@@ -280,6 +280,8 @@ const loadArticle = () => {
                     simpleUpload: {
                         uploadUrl: '../image'
                     }
+                }).then(x => {
+                    editor = x;
                 });
             } else if (xhr.status === 403) {
                 alert('ㅋ');

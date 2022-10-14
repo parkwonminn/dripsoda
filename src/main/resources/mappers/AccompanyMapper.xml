@@ -113,4 +113,49 @@
         WHERE `index` = #{index}
         LIMIT 1
     </select>
+
+    <insert id="insertRequest"
+            useGeneratedKeys="true"
+            keyColumn="index"
+            keyProperty="index"
+            parameterType="com.dripsoda.community.entities.accompany.RequestEntity">
+        insert into `dripsoda_accompany`.`requests`
+        (`requester_user_email`, `requestee_user_email`, `article_index`, `created_at`, `granted_flag`, `declined_flag`)
+        values (#{requesterUserEmail}, #{requesteeUserEmail}, #{articleIndex}, #{createdAt}, #{isGranted},
+                #{isDeclined})
+    </insert>
+
+    <select id="selectRequestByRequesterArticleIndex"
+            resultType="com.dripsoda.community.entities.accompany.RequestEntity">
+        select `index`              as `index`,
+               requester_user_email as `requesterUserEmail`,
+               requestee_user_email as `requesteeUserEmail`,
+               article_index        as `articleIndex`,
+               created_at           as `createdAt`,
+               granted_flag         as `isGranted`,
+               declined_flag        as `isDeclined`
+        from `dripsoda_accompany`.`requests`
+        where `requester_user_email` = #{requesterUserEmail}
+          and `article_index` = #{articleIndex}
+        limit 1
+    </select>
+
+    <update id="updateArticle"
+            parameterType="com.dripsoda.community.entities.accompany.ArticleEntity">
+        update `dripsoda_accompany`.`articles`
+        set `user_email`       = #{userEmail},
+            `created_at`       = #{createdAt},
+            `continent_value`  = #{continentValue},
+            `country_value`    = #{countryValue},
+            `region_value`     = #{regionValue},
+            `capacity`         = #{capacity},
+            `date_from`        = #{dateFrom},
+            `date_to`          = #{dateTo},
+            `cover_image`      = #{coverImage},
+            `cover_image_mime` = #{coverImageMime},
+            `title`            = #{title},
+            `content`          = #{content}
+        where `index` = #{index}
+        limit 1
+    </update>
 </mapper>

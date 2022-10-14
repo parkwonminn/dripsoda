@@ -9,9 +9,33 @@ const content = window.document.getElementById('content');
 const createdAt = window.document.getElementById('createdAt');
 const name = window.document.getElementById('name');
 const requestButton = window.document.getElementById('requestButton');
-const modifyButton = window.document.getElementById('modifyButton')
+const retractButton = window.document.getElementById('retractButton');
+const modifyButton = window.document.getElementById('modifyButton');
 const deleteButton = window.document.getElementById('deleteButton');
 
+
+const checkRequest = () => {
+    cover.show('ㄱㄷ');
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', `../request/${id}`);
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            cover.hide();
+            if (xhr.status >= 200 && xhr.status < 300) {
+                const responseJson = JSON.parse(xhr.responseText);
+                if (responseJson['result'] === true) {
+                    retractButton.classList.add('visible');
+
+                } else {
+                    requestButton.classList.add('visible');
+                }
+            } else {
+                alert('일부 정보를 불러오지 못하였습니다.')
+            }
+        }
+    };
+    xhr.send();
+}
 
 cover.show('요청한 정보를 불러오고 있습니다.\n\n잠시만 기다려 주세요.');
 const xhr = new XMLHttpRequest();
@@ -40,6 +64,7 @@ xhr.onreadystatechange = () => {
             }
             createdAt.innerText = `${createdAtObj.getFullYear()}-${createdAtObj.getMonth() + 1} -${createdAtObj.getDate()} ${createdAtObj.getHours()} : ${createdAtObj.getMinutes()}`;
 
+            checkRequest();
         } else if (xhr.status === 404) {
             alert('존재하지 않는 동행 게시글입니다.');
             if (window.history.length > 0) {
@@ -94,3 +119,45 @@ deleteButton.addEventListener('click', () => {
 modifyButton.addEventListener('click', () => {
     window.location.href = `../modify/${id}`;
 })
+
+requestButton.addEventListener('click', () => {
+    if (requestButton.dataset.signed === false) {
+        window.location.href = '../../member/userLogin';
+        return;
+    }
+    cover.show('동행 신청 처리 중입니다.\n\n잠시만 기다려 주세요.')
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', `../request/${id}`);
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            cover.hide();
+            if (xhr.status >= 200 && xhr.status < 300) {
+                const responseJson = JSON.parse(xhr.responseText);
+                switch (responseJson['result']) {
+                    case 'not_found' :
+                        alert('더 이상 존재하지 않는 동행 정보입니다.')
+                        window.location.href = '../'
+                        break;
+                    case 'not_signed' :
+                        alert('로그인 정보가 유효하지 않습니다.')
+                        break;
+                    case 'yourself' :
+                        alert('찐')
+                        break;
+                    case 'success' :
+                        alert('동행 신청에 성공하였습니다.')
+                        window.location.reload();
+                        break;
+                    default:
+                        alert('알 수 없는 이유로 동행 신청에 실패하였습니다. 잠시후 다시 시도해 주세요.')
+                }
+            } else {
+                alert('서버와 통신하지 못하였습니다. 잠시후 다시 시도해 주세요.')
+            }
+        }
+    };
+    xhr.send();
+});
+
+
+
